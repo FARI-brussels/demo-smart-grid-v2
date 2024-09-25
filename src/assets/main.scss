@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'Rhetorik';
+  src: url(RhetorikSerifTrial-Regular.ttf);
+}
+
+#app,
+body {
+  background-image: url('../assets/SmartEnergy_BG.svg?url');
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  overflow: hidden;
+  background-size: contain;
+}
