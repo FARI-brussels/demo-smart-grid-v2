@@ -1,16 +1,34 @@
 <template>
   <div class="animation-wrapper">
-    <div ref="lottieContainer" class="lottie-container"></div>
+    <div
+      v-bind="$attrs"
+      ref="lottieContainer"
+      class="lottie-container"
+      :style="props.size || 'width: 1920px; height: 1080px'"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch, onBeforeUnmount } from 'vue'
-import lottie, { AnimationItem } from 'lottie-web'
+import lottie from 'lottie-web'
+import type { AnimationItem } from 'lottie-web'
+
+defineOptions({
+  inheritAttrs: false
+})
 
 const props = defineProps<{
   animationData: Object
+  autoplay?: boolean
+  loop?: boolean
   dark?: boolean
+  size?: {
+    width: string
+    height: string
+    top: string
+    left: string
+  }
 }>()
 
 const lottieContainer = ref<HTMLElement | null>(null)
@@ -22,10 +40,13 @@ function init({ container, animationData }: { container: HTMLElement; animationD
   }
   animationInstance = lottie.loadAnimation({
     container,
-    renderer: 'canvas',
-    loop: true,
-    autoplay: true,
-    animationData
+    renderer: 'svg',
+    loop: props.loop,
+    autoplay: props.autoplay,
+    animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid meet'
+    }
   })
 }
 
@@ -59,6 +80,7 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .animation-wrapper {
+  z-index: 2;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -70,6 +92,8 @@ onBeforeUnmount(() => {
   left: 0;
   width: 1920px;
   height: 1080px;
+  max-width: 1920px; // Set a maximum width
+  max-height: 1080px;
   z-index: -1;
   background-size: cover;
   background-position: center;

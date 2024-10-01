@@ -1,10 +1,25 @@
 <template>
   <div class="view bg-color-blue" :class="{ [scenario]: true }">
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-1" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-2" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-3" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-4" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-5" />
+    <!-- <Renderer
+      v-if="props.scenario === 'summer'"
+      class="heat-haze-effect"
+      ref="renderer"
+      resize
+      :orbit-ctrl="{ enableDamping: true, dampingFactor: 0.01 }"
+    >
+      <Camera :position="{ x: 0, y: 0, z: 2 }" />
+      <Scene background="#ffff">
+        <NoisyImage
+          :src="img"
+          :time-coef="0.01"
+          :noise-coef="10"
+          :z-coef="0.05"
+          :disp-coef="0"
+          width="2000"
+        />
+      </Scene>
+    </Renderer> -->
+
     <FAppBar color="primary" class="appbar">
       <template #navigation>
         <FButtonIcon
@@ -33,7 +48,6 @@
           ref="settings"
           :locale="locale"
           :scenario="props.scenario"
-          @agents="(val) => (showAgents = val)"
           @scenario="(e) => $emit('change:scenario', e)"
         />
       </template>
@@ -43,21 +57,8 @@
       :animation-data="animationGraph"
       :key="animationKey"
       class="animation-graph"
-      autoplay
-      :size="{
-        width: 'calc(1920px / 2.5)',
-        height: 'calc(1080px / 2.5)',
-        left: '30%',
-        top: '30%'
-      }"
     />
-    <AnimationContainer
-      :animation-data="animationData"
-      :key="animationKey2"
-      class="animation"
-      loop
-      autoplay
-    />
+    <AnimationContainer :animation-data="animationData" :key="animationKey" class="animation" />
   </div>
 </template>
 
@@ -73,7 +74,7 @@ import IconCurrencyValue from '@/components/icons/IconCurrencyValue.vue'
 import IconSunny from '@/components/icons/IconSunny.vue'
 import IconRainy from '@/components/icons/IconRainy.vue'
 import AnimationContainer from '@/components/AnimationContainer.vue'
-import { ref, onMounted, watchEffect } from 'vue'
+import { ref, onMounted } from 'vue'
 
 import RainyNight from '@/assets/RainyNight.json'
 import GraphRainyNight from '@/assets/GraphRainyNight.json'
@@ -87,18 +88,19 @@ import SpringCold from '@/assets/SpringCold.json'
 import GraphHotSunny from '@/assets/GraphHotSunny.json'
 import SunSummer from '@/assets/SunSummer.json'
 
+// import img from '../assets/summer.jpg'
+
+// import { Camera, Renderer, Scene } from 'troisjs'
+// import NoisyImage from 'troisjs/src/components/noisy/NoisyImage.js'
+
 const animationGraph = ref(GraphHotSunny)
 const animationData = ref(SunSummer)
 
 const animationKey = ref(0)
-const animationKey2 = ref(0)
-const animationKey3 = ref(0)
 
 onMounted(() => animationKey.value++)
 const props = defineProps<{ scenario: Scenarios }>()
 const { data, locale } = storeToRefs(useDataStore())
-
-const showAgents = ref(true)
 
 const toolbarTitle = {
   winter: {
@@ -118,61 +120,11 @@ const toolbarTitle = {
     temperature: '15'
   }
 }
-
-watchEffect(() => {
-  switch (props.scenario) {
-    case 'summer':
-      animationData.value = SunSummer
-      animationGraph.value = GraphHotSunny
-      break
-    case 'winter':
-      animationData.value = SunWinter
-      animationGraph.value = GraphSunnyWinter
-      break
-    case 'spring':
-      animationData.value = SpringCold
-      animationGraph.value = GraphSpringCold
-      break
-    case 'autumn':
-      animationData.value = RainyNight
-      animationGraph.value = GraphRainyNight
-      break
-  }
-  animationKey.value++ // Increment animationKey for transition
-  animationKey2.value++ // Increment animationKey for transition
-  animationKey3.value++ // Increment animationKey for transition
-})
 </script>
 
 <style scoped lang="scss">
 .animation {
   z-index: 2;
-}
-
-.agent {
-  width: 40px;
-  position: absolute;
-  z-index: 3;
-  &-1 {
-    right: 69px;
-    top: 74.5%;
-  }
-  &-2 {
-    top: 152px;
-    right: 484px;
-  }
-  &-3 {
-    top: 152px;
-    left: 286px;
-  }
-  &-4 {
-    top: 490px;
-    left: 170px;
-  }
-  &-5 {
-    bottom: 200px;
-    left: 827px;
-  }
 }
 .animation-graph {
   z-index: 3;

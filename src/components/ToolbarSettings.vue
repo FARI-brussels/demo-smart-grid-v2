@@ -14,7 +14,7 @@
           :key="value"
           class="scenario-item rounded-s p-xs"
           :class="{ selected: value === scenario }"
-          @click="() => emit('scenario', value)"
+          @click="() => selectScenario(value)"
         >
           <component :is="icon" />
           <span class="font-weight-black font-size-body"> {{ label[locale] }} </span>
@@ -22,7 +22,7 @@
 
         <div class="scenario-item rounded-s p-xs" :class="{ selected: agentsActive }">
           <span class="font-weight-black font-size-body agent-selector"> Agents </span>
-          <FSwitch v-model="agentsActive" />
+          <FSwitch v-model="agentsActive" @change="toggleAgents" />
         </div>
       </div>
     </FDropdown>
@@ -30,26 +30,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { FDropdown, FSwitch } from 'fari-component-library'
 import IconSummer from '@/components/icons/IconSummer.vue'
 import IconWinter from '@/components/icons/IconWinter.vue'
 import IconSpring from '@/components/icons/IconSpring.vue'
 import IconAutumn from '@/components/icons/IconAutumn.vue'
-import type { Scenario } from '@/types/Scenario.ts'
+import type { Scenarios } from '@/types/Scenario.ts'
 
 defineProps<{
   locale: string
-  scenario: Scenario
+  scenario: Scenarios
 }>()
 
 const emit = defineEmits<{
-  (e: 'scenario', value: Scenario): void
+  (e: 'scenario', value: Scenarios): void
+  (e: 'agents', value: boolean): void
 }>()
 
 const settingsOpen = ref(false)
 
-const agentsActive = ref(false)
+const agentsActive = ref(true)
+
+function selectScenario(value: Scenarios) {
+  emit('scenario', value)
+  settingsOpen.value = false
+}
+
+function toggleAgents(value: boolean) {
+  emit('agents', agentsActive.value)
+}
 
 const scenarios = [
   {
