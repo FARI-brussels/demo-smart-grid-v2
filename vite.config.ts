@@ -17,5 +17,13 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    cors: {
+      origin: 'http://localhost:3000',
+      methods: ['GET', 'POST'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      preflightContinue: true
+    }
   }
 })

@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import { parseData } from './parser'
+const strapiURL = import.meta.env.VITE_API_URL
 
 type Locale = 'en' | 'fr-FR' | 'nl'
 
@@ -42,21 +44,18 @@ export const useDataStore = defineStore('data', {
       this.loading = true
       this.error = null
       try {
-        const response = await fetch('http://localhost:3000/api/data')
-        const parsed = await response.json()
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/demos/25?populate=*`)
+        const airLogo = await fetch(`${strapiURL}/uploads/air_a5e1c08136.svg`)
+        const logo = await airLogo.text()
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
+        const { data } = await response.json()
 
-        parsed.forEach((e: { [k: string]: string }) => {
-          console.log(e)
-          const { research_head, research_lead, logo, locale, explanation_short } = e
-          if (logo) this.data.logo = logo
-          if (research_head) this.data.research_head = research_head
-          if (research_lead) this.data.research_lead = research_lead
-          if (locale) this.data.explanation_short[locale as Locale] = explanation_short
-        })
+        const parsed = parseData(data)
+
+        if (!response.ok) throw new Error('Network response was not ok')
+
+        this.data = parsed
+        this.data.logo = logo
       } catch (error) {
         this.error = 'Error fetching data'
       } finally {

@@ -26,8 +26,8 @@ const props = defineProps<{
   size?: {
     width: string
     height: string
-    top: string
-    left: string
+    top?: string
+    left?: string
   }
 }>()
 
