@@ -45,10 +45,8 @@
       class="animation-graph"
       autoplay
       :size="{
-        width: 'calc(1920px / 2.5)',
-        height: 'calc(1080px / 2.5)',
-        left: '30%',
-        top: '30%'
+        width: '1920px',
+        height: '1080px'
       }"
     />
     <AnimationContainer
@@ -75,11 +73,11 @@ import IconRainy from '@/components/icons/IconRainy.vue'
 import AnimationContainer from '@/components/AnimationContainer.vue'
 import { ref, onMounted, watchEffect } from 'vue'
 
-import RainyNight from '@/assets/RainyNight.json'
 import GraphRainyNight from '@/assets/GraphRainyNight.json'
+import RainyNight from '@/assets/RainyNight.json'
 
-import SunWinter from '@/assets/RainyNight.json'
-import GraphSunnyWinter from '@/assets/GraphRainyNight.json'
+import GraphSunnyWinter from '@/assets/GraphSunnyWinter.json'
+import SunWinter from '@/assets/SunWinter.json'
 
 import GraphSpringCold from '@/assets/GraphSpringCold.json'
 import SpringCold from '@/assets/SpringCold.json'
