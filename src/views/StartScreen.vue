@@ -64,7 +64,7 @@
 
     <div class="backdrop" :class="{ 'backdrop-active': showScenarioSelect || showInfoCard }"></div>
     <FFooter class="footer" />
-    <AnimationContainer :animation-data="animationData" />
+    <AnimationContainer autoplay :animation-data="animationData" />
   </div>
 </template>
 
