@@ -64,7 +64,7 @@
 
     <div class="backdrop" :class="{ 'backdrop-active': showScenarioSelect || showInfoCard }"></div>
     <FFooter class="footer" />
-    <AnimationContainer autoplay :animation-data="animationData" />
+    <AnimationContainer autoplay loop :animation-data="animationData" />
   </div>
 </template>
 
@@ -238,7 +238,7 @@ const scenarios = [
   position: absolute;
   top: 25%;
   left: 20%;
-  z-index: 2;
+  z-index: 3;
 }
 
 .researchers-container {
@@ -266,7 +266,7 @@ const scenarios = [
   width: 100%;
   height: 100%;
   backdrop-filter: blur(0);
-  z-index: 1;
+  z-index: 2;
   transition: all 100ms;
 
   &-active {

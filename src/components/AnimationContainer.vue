@@ -80,7 +80,7 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .animation-wrapper {
-  z-index: 2;
+  z-index: 1;
   position: absolute;
   width: 100%;
   height: 100%;
