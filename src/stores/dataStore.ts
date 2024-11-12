@@ -44,8 +44,8 @@ export const useDataStore = defineStore('data', {
       this.loading = true
       this.error = null
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/demos/25?populate=*`)
-        const airLogo = await fetch(`${strapiURL}/uploads/air_a5e1c08136.svg`)
+        const response = await fetch(`http://46.226.110.124:1337/api/demos/25?populate=*`)
+        const airLogo = await fetch(`http://46.226.110.124:1337/uploads/air_a5e1c08136.svg`)
         const logo = await airLogo.text()
 
         const { data } = await response.json()
