@@ -176,7 +176,7 @@ const scenarios = [
 }
 
 .scenario-select {
-  z-index: 2;
+  z-index: 3;
   position: absolute;
   top: 5%;
   left: 27%;
