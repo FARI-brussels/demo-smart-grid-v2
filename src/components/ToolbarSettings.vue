@@ -36,7 +36,7 @@ import IconSummer from '@/components/icons/IconSummer.vue'
 import IconWinter from '@/components/icons/IconWinter.vue'
 import IconSpring from '@/components/icons/IconSpring.vue'
 import IconAutumn from '@/components/icons/IconAutumn.vue'
-import type { Scenarios } from '@/types/Scenario.ts'
+import type { Scenarios } from '@/types'
 
 defineProps<{
   locale: string

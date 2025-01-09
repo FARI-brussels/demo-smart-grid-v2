@@ -1,6 +1,5 @@
 <template>
   <div class="view">
-    <!-- <canvas ref="backgroundCanvas"></canvas> -->
     <FButtonIcon name="tooltip" class="tooltip" color="blue-light" small @click="toggleInfoCard" />
     <div class="heading">
       <div class="title">
@@ -20,7 +19,7 @@
 
     <FSlideTransition :show="showInfoCard">
       <FCard v-if="showInfoCard" @close="toggleInfoCard" @update:locale="setLocale" class="card">
-        {{ data.explanation_short[locale] }}
+        {{ data.description[locale] }}
 
         <div class="researchers-container">
           <span class="researchers">
@@ -29,8 +28,15 @@
           <span class="researchers">
             research lead: <span class="research-lead color-black"> {{ data.research_lead }} </span>
           </span>
+          <div class="flex">
+            <img v-for="sdg in data.sdg_images" :key="sdg" :src="sdg" class="sdg mr-md mt-sm" />
+          </div>
         </div>
-        <template #footer> <div v-if="data.logo" v-html="data.logo"></div> </template>
+        <template #footer>
+          <div v-if="data?.logos">
+            <img v-for="logo in data.logos" :src="logo" :key="logo" class="card-logo" />
+          </div>
+        </template>
       </FCard>
     </FSlideTransition>
 
@@ -81,7 +87,7 @@ import {
 } from 'fari-component-library'
 import AnimationContainer from '@/components/AnimationContainer.vue'
 import animationData from '@/assets/smartgridNoTitle24fpsRedux.json'
-import { useDataStore } from '@/stores/dataStore'
+import { useCMSstore } from '@/stores/cms'
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import IconSummer from '@/components/icons/IconSummer.vue'
@@ -89,11 +95,11 @@ import IconWinter from '@/components/icons/IconWinter.vue'
 import IconSpring from '@/components/icons/IconSpring.vue'
 import IconAutumn from '@/components/icons/IconAutumn.vue'
 
-import type { Scenario } from '@/types/Scenario.ts'
+import type { Scenarios } from '@/types'
 
 const emit = defineEmits<{
-  (e: 'scenario', value: Scenario): void
-  (e: 'start', value: Scenario): void
+  (e: 'scenario', value: Scenarios): void
+  (e: 'start', value: Scenarios): void
 }>()
 const showInfoCard = ref(false)
 const toggleInfoCard = () => (showInfoCard.value = !showInfoCard.value)
@@ -101,12 +107,12 @@ const toggleInfoCard = () => (showInfoCard.value = !showInfoCard.value)
 const showScenarioSelect = ref(false)
 const toggleScenarioSelect = () => (showScenarioSelect.value = !showScenarioSelect.value)
 
-const { data, locale } = storeToRefs(useDataStore())
-const { getData, setLocale } = useDataStore()
+const { data, locale } = storeToRefs(useCMSstore())
+const { getData, setLocale } = useCMSstore()
 
 onMounted(getData)
 
-function selectScenario(scenario: Scenario) {
+function selectScenario(scenario: Scenarios) {
   setTimeout(() => (showScenarioSelect.value = false), 400)
   emit('start', scenario)
 }
@@ -172,7 +178,6 @@ const scenarios = [
   height: 100%;
   width: 100%;
   position: relative;
-  // background-image: url('../assets/SmartEnergy_BG.svg?url');
 }
 
 .scenario-select {
@@ -276,5 +281,14 @@ const scenarios = [
     backdrop-filter: blur(2px);
     transition: all 300ms;
   }
+}
+
+.card-logo {
+  height: 3.5rem;
+  margin-right: 2rem;
+}
+.sdg {
+  height: 3.5rem;
+  width: 3.5rem;
 }
 </style>
