@@ -1,10 +1,10 @@
 <template>
   <div class="view bg-color-blue" :class="{ [scenario]: true }">
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-1" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-2" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-3" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-4" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-5" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-1" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-2" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-3" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-4" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-5" />
     <FAppBar color="primary" class="appbar">
       <template #navigation>
         <FButtonIcon
