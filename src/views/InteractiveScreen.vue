@@ -1,10 +1,10 @@
 <template>
   <div class="view bg-color-blue" :class="{ [scenario]: true }">
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-1" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-2" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-3" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-4" />
-    <img v-if="showAgents" src="@/assets/agent.gif" class="agent agent-5" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-1" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-2" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-3" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-4" />
+    <img v-if="showAgents" src="@/assets/agent_hi_res.gif" class="agent agent-5" />
     <FAppBar color="primary" class="appbar">
       <template #navigation>
         <FButtonIcon
@@ -60,10 +60,10 @@
 </template>
 
 <script setup lang="ts">
-import { FAppBar, FButtonIcon, FTitle } from 'fari-component-library'
-import { useDataStore } from '@/stores/dataStore'
+import { FAppBar, FButtonIcon } from 'fari-component-library'
+import { useCMSstore } from '@/stores/cms'
 import { storeToRefs } from 'pinia'
-import type { Scenarios } from '@/types/Scenario.ts'
+import type { Scenarios } from '@/types'
 import ToolbarSettings from '@/components/ToolbarSettings.vue'
 import IconCloudy from '@/components/icons/IconCloudy.vue'
 import IconEnergyCoin from '@/components/icons/IconEnergyCoin.vue'
@@ -94,7 +94,7 @@ const animationKey3 = ref(0)
 
 onMounted(() => animationKey.value++)
 const props = defineProps<{ scenario: Scenarios }>()
-const { data, locale } = storeToRefs(useDataStore())
+const { locale } = storeToRefs(useCMSstore())
 
 const showAgents = ref(true)
 
@@ -136,9 +136,9 @@ watchEffect(() => {
       animationGraph.value = GraphRainyNight
       break
   }
-  animationKey.value++ // Increment animationKey for transition
-  animationKey2.value++ // Increment animationKey for transition
-  animationKey3.value++ // Increment animationKey for transition
+  animationKey.value++
+  animationKey2.value++
+  animationKey3.value++
 })
 </script>
 

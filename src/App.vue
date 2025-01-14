@@ -23,24 +23,19 @@ import { ref } from 'vue'
 
 import StartScreen from '@/views/StartScreen.vue'
 import InteractiveScreen from '@/views/InteractiveScreen.vue'
-import type { Scenario } from '@/types/Scenario.ts'
+import type { Scenarios } from '@/types'
 
 const startScreenVisible = ref(true)
 const transitionName = ref('slide-left')
 
-const scenario = ref<Scenario>('summer')
+const scenario = ref<Scenarios>('summer')
 
-const startDemo = (e: Scenario) => {
+const startDemo = (e: Scenarios) => {
   scenario.value = e
-
-  // transitionName.value = 'slide-left'
   startScreenVisible.value = false
 }
 
-const exitDemo = () => {
-  // transitionName.value = 'slide-right'
-  startScreenVisible.value = true
-}
+const exitDemo = () => (startScreenVisible.value = true)
 </script>
 
 <style scoped lang="scss">
